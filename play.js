@@ -13,6 +13,21 @@ const autoPilot = () => {
     });
   });
 };
+
+const setupInput = function(connection) {
+  const stdin = process.stdin;
+  stdin.setRawMode(true);
+  stdin.setEncoding("utf8");
+  stdin.resume();
+  stdin.on('data', (data) => {
+    if (data === '\u0003') {
+      process.exit();
+    }
+    connection.write(data);
+  });
+  return stdin;
+};
+
 const connection = connect('165.227.47.243', 50541);
 
 connection.on('connect', () => {
@@ -20,7 +35,8 @@ connection.on('connect', () => {
   connection.write('Name: AHS');
 });
 
-autoPilot();
+//autoPilot();
+const stdin = setupInput(connection);
 
 connection.on('data', data => {
   console.log('Message from server: ', data);

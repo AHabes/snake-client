@@ -1,4 +1,5 @@
 const {connect} = require('./client');
+const {setupInput} = require('./input');
 
 const autoPilot = () => {
   connection.on('connect', () => {
@@ -14,19 +15,7 @@ const autoPilot = () => {
   });
 };
 
-const setupInput = function(connection) {
-  const stdin = process.stdin;
-  stdin.setRawMode(true);
-  stdin.setEncoding("utf8");
-  stdin.resume();
-  stdin.on('data', (data) => {
-    if (data === '\u0003') {
-      process.exit();
-    }
-    connection.write(data);
-  });
-  return stdin;
-};
+console.log("Connecting ...");
 
 const connection = connect('165.227.47.243', 50541);
 
@@ -35,8 +24,7 @@ connection.on('connect', () => {
   connection.write('Name: AHS');
 });
 
-//autoPilot();
-const stdin = setupInput(connection);
+setupInput(connection);
 
 connection.on('data', data => {
   console.log('Message from server: ', data);

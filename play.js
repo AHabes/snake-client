@@ -1,5 +1,6 @@
 const {connect} = require('./client');
 const {setupInput, sendMessages} = require('./input');
+const { IP, PORT, NAME} = require("./constants");
 
 const autoPilot = () => {
   connection.on('connect', () => {
@@ -17,11 +18,11 @@ const autoPilot = () => {
 
 console.log("Connecting ...");
 
-const connection = connect('165.227.47.243', 50541);
+const connection = connect(IP, PORT);
 
 connection.on('connect', () => {
   console.log('Successfully connected to game server');
-  connection.write('Name: AHS');
+connection.write('Name: '.concat(NAME));
 });
 
 setupInput(connection);

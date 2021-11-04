@@ -1,5 +1,5 @@
 const {connect} = require('./client');
-const {setupInput} = require('./input');
+const {setupInput, sendMessages} = require('./input');
 
 const autoPilot = () => {
   connection.on('connect', () => {
@@ -25,6 +25,7 @@ connection.on('connect', () => {
 });
 
 setupInput(connection);
+sendMessages(connection);
 
 connection.on('data', data => {
   console.log('Message from server: ', data);

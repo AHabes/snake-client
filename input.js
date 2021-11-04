@@ -22,7 +22,6 @@ const setupInput = function(connection) {
       break;
     }
     connection.write(command);
-    console.log(data);
   });
   stdin.resume();
 
